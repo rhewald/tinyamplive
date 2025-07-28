@@ -1,0 +1,90 @@
+{
+  "name": "TinyAmp Music Discovery Platform",
+  "description": "Independent music discovery platform for San Francisco venues with comprehensive event aggregation and artist discovery",
+  "version": "1.0.0",
+  "type": "fullstack",
+  "framework": "react-express",
+  "language": "typescript",
+  "features": [
+    "Music event discovery",
+    "Venue information and photos",
+    "Artist profiles with Spotify integration",
+    "Advanced filtering and search",
+    "Location-based discovery",
+    "Responsive design",
+    "Database-driven content"
+  ],
+  "architecture": {
+    "frontend": {
+      "framework": "React 18",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS",
+      "components": "Radix UI + shadcn/ui",
+      "routing": "Wouter",
+      "state": "TanStack Query",
+      "build": "Vite"
+    },
+    "backend": {
+      "framework": "Express.js",
+      "language": "TypeScript",
+      "orm": "Drizzle ORM",
+      "database": "PostgreSQL (Neon)",
+      "build": "ESBuild"
+    },
+    "external": {
+      "apis": ["Spotify Web API", "Google Places API"],
+      "services": ["ScrapingBee"],
+      "deployment": "Replit"
+    }
+  },
+  "directories": {
+    "frontend": "client/src",
+    "backend": "server",
+    "shared": "shared",
+    "assets": "attached_assets",
+    "config": "."
+  },
+  "commands": {
+    "dev": "npm run dev",
+    "build": "npm run build",
+    "db:push": "npm run db:push",
+    "db:studio": "npm run db:studio"
+  },
+  "ai_context": {
+    "primary_files": [
+      "shared/schema.ts",
+      "server/storage.ts",
+      "server/routes.ts",
+      "client/src/App.tsx",
+      "replit.md"
+    ],
+    "key_patterns": [
+      "Use storage interface for all database operations",
+      "Implement proper TypeScript types from shared schema",
+      "Use TanStack Query for server state management",
+      "Apply Tailwind CSS with Radix UI components",
+      "Maintain responsive design patterns"
+    ],
+    "development_flow": [
+      "1. Define database schema in shared/schema.ts",
+      "2. Update storage interface in server/storage.ts",
+      "3. Create API routes in server/routes.ts",
+      "4. Build React components with proper types",
+      "5. Style with Tailwind CSS and Radix UI"
+    ]
+  },
+  "environment": {
+    "node_version": "18+",
+    "database": "PostgreSQL via Neon",
+    "apis": {
+      "google_places": "GOOGLE_PLACES_API_KEY",
+      "scrapingbee": "SCRAPINGBEE_API_KEY"
+    }
+  },
+  "deployment": {
+    "platform": "Replit",
+    "url": "tinyamp.live",
+    "build_command": "npm run build",
+    "start_command": "npm run dev"
+  }
+}
