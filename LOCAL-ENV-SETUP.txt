@@ -1,0 +1,11 @@
+For your local Cursor IDE setup, create a .env file with these exact credentials:
+
+DATABASE_URL=postgresql://neondb_owner:m6Qps8vhOk2W@ep-long-tooth-a5y4e3fb.us-east-2.aws.neon.tech/neondb?sslmode=require
+GOOGLE_PLACES_API_KEY=AIzaSyB9BlL7kuDRa5NiBfh0Hvt1xi9uYaiRbaE
+VITE_GOOGLE_PLACES_API_KEY=AIzaSyB9BlL7kuDRa5NiBfh0Hvt1xi9uYaiRbaE
+SPOTIFY_CLIENT_ID=2a3104352bb4486eb715253fea6ea3ee
+SPOTIFY_CLIENT_SECRET=d9d3fcd6f44d403cbd0afc822d1079a7
+SCRAPINGBEE_API_KEY=RQXDMPPGVK1WA9Q5UHFWBKPAU8LD1K5HZWTYV6JL5ATA5K3QSZLW3D7Z4PQXWKKL7FWEMCHVYAACYCSQ
+
+Save this as .env in your project root directory (same level as package.json).
+No quotes, no extra spaces around the equals signs.
