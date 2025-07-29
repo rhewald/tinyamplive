@@ -1,6 +1,10 @@
-const { chromium } = require('playwright');
-const fs = require('fs');
-const path = require('path');
+import { chromium } from 'playwright';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 class EnhancedEventScraper {
   constructor() {
@@ -16,7 +20,9 @@ class EnhancedEventScraper {
     this.page = await this.browser.newPage();
     
     // Set user agent
-    await this.page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+    await this.page.setExtraHTTPHeaders({
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    });
   }
 
   async close() {
@@ -198,8 +204,5 @@ async function main() {
   });
 }
 
-if (require.main === module) {
-  main().catch(console.error);
-}
-
-module.exports = { EnhancedEventScraper }; 
+// Run the scraper
+main().catch(console.error); 

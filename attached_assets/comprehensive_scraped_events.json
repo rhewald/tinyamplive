@@ -1,0 +1,16 @@
+[
+  {
+    "title": "List",
+    "date": "3/11/2025",
+    "venue": "The Independent",
+    "venue_slug": "the-independent",
+    "raw_text": "List\n                    Cal\n                \n            \n\n            \n\t\n\t\tUpcoming Shows\t\n\t\n\t\ttwSendEvent({'twView':'list2','event':'twView'});\n    /* Custom Styles1 */\n#tw-responsive .container{ma"
+  },
+  {
+    "title": "Upcoming Shows",
+    "date": "3/11/2025",
+    "venue": "The Independent",
+    "venue_slug": "the-independent",
+    "raw_text": "Upcoming Shows\t\n\t\n\t\ttwSendEvent({'twView':'list2','event':'twView'});\n    /* Custom Styles1 */\n#tw-responsive .container{max-width:980px;}\n\nbody #tw-responsive .tw-section {\n    margin-top: 0 !importa"
+  }
+]
