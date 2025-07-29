@@ -17,37 +17,9 @@ interface ScrapedEvent {
   raw_text?: string;
 }
 
-function extractArtistsFromTitle(title: string, rawText?: string): string[] {
-  const artists: string[] = [];
-  
-  let cleanTitle = title.replace(/ at .*$/, '').trim();
-  
-  if (rawText) {
-    const artistPatterns = [
-      /([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+\[co-headlining\]/g,
-      /([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+[A-Z][a-z\s]+$/gm,
-      /([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+[A-Z][a-z\s]+(?=\s+at\s+)/g,
-    ];
-    
-    for (const pattern of artistPatterns) {
-      const matches = rawText.match(pattern);
-      if (matches) {
-        matches.forEach(match => {
-          const artistName = match.replace(/\[co-headlining\]/, '').trim();
-          if (artistName.length > 2 && !artists.includes(artistName)) {
-            artists.push(artistName);
-          }
-        });
-      }
-    }
-  }
-  
-  if (artists.length === 0 && cleanTitle.length > 2) {
-    const parts = cleanTitle.split(/[,\-\+]/).map(part => part.trim()).filter(part => part.length > 2);
-    artists.push(...parts.slice(0, 3));
-  }
-  
-  return artists.slice(0, 3);
+function extractArtistsFromTitle(title: string): string[] {
+  const cleanTitle = title.replace(/ at .*$/, '').trim();
+  return [cleanTitle];
 }
 
 function parseDate(dateStr: string): Date | null {
@@ -55,9 +27,9 @@ function parseDate(dateStr: string): Date | null {
     const cleanDate = dateStr.replace(/\n/g, ' ').trim();
     
     const patterns = [
-      /(\w+)\s+(\d{1,2})\s+(\d{4})/,
-      /(\d{1,2})\/(\d{1,2})\/(\d{4})/,
       /(\w+)\s+(\d{1,2}),?\s+(\d{4})/,
+      /(\d{1,2})\/(\d{1,2})\/(\d{4})/,
+      /(\w+)\s+(\d{1,2})\s+(\d{4})/,
       /(\d{1,2})\.(\d{1,2})\.(\d{4})/,
     ];
     
@@ -111,14 +83,14 @@ function isValidArtistName(name: string): boolean {
   return true;
 }
 
-async function importAggressiveEvents() {
+async function importTargetedIndependentEvents() {
   try {
-    console.log("Importing aggressively scraped events...");
+    console.log("Importing targeted Independent events...");
     
     // Read the scraped events file
-    const filePath = path.join(__dirname, '../attached_assets/aggressive_scraped_events.json');
+    const filePath = path.join(__dirname, '../attached_assets/targeted_independent_events.json');
     if (!fs.existsSync(filePath)) {
-      console.error('Scraped events file not found. Please run the aggressive scraper first.');
+      console.error('Targeted Independent events file not found. Please run the targeted scraper first.');
       return;
     }
     
@@ -160,7 +132,7 @@ async function importAggressiveEvents() {
         }
         
         // Extract artists from title
-        const artistNames = extractArtistsFromTitle(eventData.title, eventData.raw_text);
+        const artistNames = extractArtistsFromTitle(eventData.title);
         if (artistNames.length === 0) {
           console.log(`No valid artists found for: ${eventData.title}`);
           skippedCount++;
@@ -222,7 +194,7 @@ async function importAggressiveEvents() {
           venueId: venue.id,
           date: eventDate,
           description: `Live music at ${eventData.venue}`,
-          price: "15.00",
+          price: "25.00",
           isFeatured: false,
           isActive: true,
         }).returning();
@@ -263,11 +235,11 @@ async function importAggressiveEvents() {
     console.log(`- Event-Artist relationships: ${finalRelationships.length}`);
     
   } catch (error) {
-    console.error("Error importing aggressive events:", error);
+    console.error("Error importing targeted Independent events:", error);
   }
 }
 
-importAggressiveEvents().then(() => {
+importTargetedIndependentEvents().then(() => {
   console.log("Import completed");
   process.exit(0);
 }).catch((error) => {
