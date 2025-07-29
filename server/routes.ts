@@ -179,7 +179,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Venue routes
   app.get("/api/venues", async (req, res) => {
     try {
-      const venues = await storage.getVenues();
+      const { workingStorage } = await import('./storage-working');
+      const venues = await workingStorage.getVenues();
       res.json(venues);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch venues" });

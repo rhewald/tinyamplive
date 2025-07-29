@@ -130,8 +130,8 @@ export class WorkingDatabaseStorage {
 
   async getVenues(): Promise<any[]> {
     try {
-      const venues = await db.select().from(venues);
-      return venues;
+      const venuesList = await db.select().from(venues);
+      return venuesList;
     } catch (error) {
       console.error('Error fetching venues:', error);
       throw error;
