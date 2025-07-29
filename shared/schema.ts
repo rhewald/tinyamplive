@@ -62,9 +62,7 @@ export const events = pgTable("events", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
-  artistId: integer("artist_id").references(() => artists.id).notNull(),
   venueId: integer("venue_id").references(() => venues.id).notNull(),
-
   date: timestamp("date").notNull(),
   doors: timestamp("doors"),
   showTime: timestamp("show_time"),
@@ -75,6 +73,16 @@ export const events = pgTable("events", {
   isFeatured: boolean("is_featured").default(false),
   isActive: boolean("is_active").default(true),
   tags: text("tags").array(),
+  // Removed artistId - now using junction table
+});
+
+// Junction table for many-to-many relationship between events and artists
+export const eventArtists = pgTable("event_artists", {
+  id: serial("id").primaryKey(),
+  eventId: integer("event_id").references(() => events.id).notNull(),
+  artistId: integer("artist_id").references(() => artists.id).notNull(),
+  isHeadliner: boolean("is_headliner").default(false), // true for main act, false for opening acts
+  order: integer("order").default(0), // Order of appearance (0 = headliner, 1+ = opening acts)
 });
 
 export const insertUserSchema = createInsertSchema(users).omit({
@@ -93,6 +101,10 @@ export const insertEventSchema = createInsertSchema(events).omit({
   id: true,
 });
 
+export const insertEventArtistSchema = createInsertSchema(eventArtists).omit({
+  id: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
@@ -105,6 +117,9 @@ export type Artist = typeof artists.$inferSelect;
 export type InsertEvent = z.infer<typeof insertEventSchema>;
 export type Event = typeof events.$inferSelect;
 
+export type InsertEventArtist = z.infer<typeof insertEventArtistSchema>;
+export type EventArtist = typeof eventArtists.$inferSelect;
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   // Add user relations if needed
@@ -115,22 +130,29 @@ export const venuesRelations = relations(venues, ({ many }) => ({
 }));
 
 export const artistsRelations = relations(artists, ({ many }) => ({
-  events: many(events),
+  eventArtists: many(eventArtists),
 }));
 
-export const eventsRelations = relations(events, ({ one }) => ({
-  artist: one(artists, {
-    fields: [events.artistId],
-    references: [artists.id],
-  }),
+export const eventsRelations = relations(events, ({ one, many }) => ({
   venue: one(venues, {
     fields: [events.venueId],
     references: [venues.id],
   }),
+  eventArtists: many(eventArtists),
+}));
+
+export const eventArtistsRelations = relations(eventArtists, ({ one }) => ({
+  event: one(events, {
+    fields: [eventArtists.eventId],
+    references: [events.id],
+  }),
+  artist: one(artists, {
+    fields: [eventArtists.artistId],
+    references: [artists.id],
+  }),
 }));
 
 export type EventWithDetails = Event & {
-  artist: Artist;
   venue: Venue;
-  openingActsDetails?: Artist[];
+  artists: (Artist & { isHeadliner: boolean; order: number })[];
 };

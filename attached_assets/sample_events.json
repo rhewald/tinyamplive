@@ -1,0 +1,101 @@
+[
+  {
+    "title": "The Black Keys with The Heavy",
+    "artists": ["The Black Keys", "The Heavy"],
+    "date": "2025-02-15",
+    "venue": "The Independent",
+    "venue_slug": "the-independent",
+    "description": "Rock legends The Black Keys return to SF with special guests The Heavy",
+    "price": 45.00,
+    "ticket_url": "https://www.ticketmaster.com/event/123456",
+    "is_featured": true
+  },
+  {
+    "title": "Phoenix + Local Natives",
+    "artists": ["Phoenix", "Local Natives"],
+    "date": "2025-02-20",
+    "venue": "Bottom of the Hill",
+    "venue_slug": "bottom-of-the-hill",
+    "description": "Indie rock showcase featuring Phoenix and Local Natives",
+    "price": 35.00,
+    "ticket_url": "https://www.bottomofthehill.com/tickets",
+    "is_featured": false
+  },
+  {
+    "title": "The Strokes w/ The Voidz",
+    "artists": ["The Strokes", "The Voidz"],
+    "date": "2025-02-25",
+    "venue": "Café du Nord",
+    "venue_slug": "cafe-du-nord",
+    "description": "The Strokes headline with Julian Casablancas' other project The Voidz",
+    "price": 55.00,
+    "ticket_url": "https://www.cafedunord.com/tickets",
+    "is_featured": true
+  },
+  {
+    "title": "Tame Impala",
+    "artists": ["Tame Impala"],
+    "date": "2025-03-01",
+    "venue": "The Independent",
+    "venue_slug": "the-independent",
+    "description": "Psychedelic rock mastermind Kevin Parker brings Tame Impala to SF",
+    "price": 40.00,
+    "ticket_url": "https://www.ticketmaster.com/event/789012",
+    "is_featured": true
+  },
+  {
+    "title": "Arctic Monkeys + The Last Shadow Puppets",
+    "artists": ["Arctic Monkeys", "The Last Shadow Puppets"],
+    "date": "2025-03-05",
+    "venue": "Bottom of the Hill",
+    "venue_slug": "bottom-of-the-hill",
+    "description": "Alex Turner brings both his bands to this intimate venue",
+    "price": 50.00,
+    "ticket_url": "https://www.bottomofthehill.com/tickets",
+    "is_featured": true
+  },
+  {
+    "title": "Vampire Weekend + HAIM",
+    "artists": ["Vampire Weekend", "HAIM"],
+    "date": "2025-03-10",
+    "venue": "Café du Nord",
+    "venue_slug": "cafe-du-nord",
+    "description": "Indie pop royalty Vampire Weekend with sisters HAIM",
+    "price": 45.00,
+    "ticket_url": "https://www.cafedunord.com/tickets",
+    "is_featured": false
+  },
+  {
+    "title": "The National + Bon Iver",
+    "artists": ["The National", "Bon Iver"],
+    "date": "2025-03-15",
+    "venue": "The Independent",
+    "venue_slug": "the-independent",
+    "description": "Two of indie's most respected bands share the stage",
+    "price": 60.00,
+    "ticket_url": "https://www.ticketmaster.com/event/345678",
+    "is_featured": true
+  },
+  {
+    "title": "LCD Soundsystem",
+    "artists": ["LCD Soundsystem"],
+    "date": "2025-03-20",
+    "venue": "Bottom of the Hill",
+    "venue_slug": "bottom-of-the-hill",
+    "description": "James Murphy brings LCD Soundsystem to this intimate venue",
+    "price": 55.00,
+    "ticket_url": "https://www.bottomofthehill.com/tickets",
+    "is_featured": true
+  },
+  {
+    "title": "Beach House + Grizzly Bear",
+    "artists": ["Beach House", "Grizzly Bear"],
+    "date": "2025-03-25",
+    "venue": "Café du Nord",
+    "venue_slug": "cafe-du-nord",
+    "description": "Dream pop meets indie folk in this special double bill",
+    "price": 40.00,
+    "ticket_url": "https://www.cafedunord.com/tickets",
+    "is_featured": false
+  }
+] 

@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { users, venues, artists, events, type User, type Venue, type Artist, type Event, type InsertUser, type InsertVenue, type InsertArtist, type InsertEvent, type EventWithDetails } from "@shared/schema";
+import { users, venues, artists, events, eventArtists, type User, type Venue, type Artist, type Event, type EventArtist, type InsertUser, type InsertVenue, type InsertArtist, type InsertEvent, type InsertEventArtist, type EventWithDetails } from "@shared/schema";
 import { eq, like, and, or, gte, lte, desc, asc } from "drizzle-orm";
 
 // Storage interface
