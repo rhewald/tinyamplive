@@ -1,0 +1,132 @@
+# TinyAmp - Cursor AI IDE Rules
+
+## Project Overview
+TinyAmp is a music discovery platform aggregating SF venue events with React frontend, Express backend, and PostgreSQL database.
+
+## Code Style & Standards
+- Use TypeScript with strict type checking
+- Follow modern ES6+ syntax patterns
+- Prefer async/await over Promises
+- Use functional components with hooks in React
+- Implement proper error boundaries and loading states
+
+## Architecture Guidelines
+- Frontend: React 18 + TypeScript + Tailwind CSS + Radix UI components
+- Backend: Express.js + TypeScript + Drizzle ORM
+- Database: PostgreSQL with Neon serverless
+- Build: Vite for frontend, ESBuild for backend
+- State: TanStack Query for server state management
+
+## File Organization
+```
+├── client/src/          # React frontend
+├── server/              # Express backend
+├── shared/              # Shared types and schemas
+├── attached_assets/     # Static assets and scrapers
+```
+
+## Development Patterns
+
+### Database Operations
+- Always use Drizzle ORM through storage interface
+- Never write raw SQL except for debugging
+- Use `npm run db:push` for schema changes
+- Implement proper relations between tables
+
+### API Development
+- Validate requests with Zod schemas
+- Use storage interface for all CRUD operations
+- Implement proper error handling with status codes
+- Return consistent JSON response formats
+
+### Frontend Development
+- Use Wouter for routing
+- Implement loading states with TanStack Query
+- Use shadcn/ui components with proper form validation
+- Apply responsive design with Tailwind CSS
+
+### Component Structure
+```typescript
+// Preferred component pattern
+export function ComponentName() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['/api/endpoint'],
+  });
+
+  if (isLoading) return <LoadingSpinner />;
+
+  return (
+    <div className="container mx-auto p-4">
+      {/* Component content */}
+    </div>
+  );
+}
+```
+
+## Code Generation Guidelines
+
+### When creating new features:
+1. Start with database schema in `shared/schema.ts`
+2. Update storage interface in `server/storage.ts`
+3. Create API routes in `server/routes.ts`
+4. Build React components with proper types
+5. Implement responsive UI with Tailwind
+
+### Common Patterns
+- Use `createInsertSchema` and `createSelectSchema` from drizzle-zod
+- Implement proper form validation with react-hook-form
+- Use proper TypeScript types from shared schema
+- Apply consistent error handling across components
+
+## Environment Setup
+- Node.js 18+ required
+- PostgreSQL via Neon serverless
+- Google Places API for venue data
+- ScrapingBee API for web scraping
+
+## Key Dependencies
+- @tanstack/react-query: Server state management
+- drizzle-orm: Type-safe database operations
+- @radix-ui/*: Accessible UI primitives
+- zod: Runtime type validation
+- tailwindcss: Utility-first styling
+
+## Development Commands
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run db:push      # Push schema changes
+npm run db:studio    # Open database studio
+```
+
+## Debugging Guidelines
+- Use browser dev tools for frontend debugging
+- Check workflow logs for backend errors
+- Use database studio for data inspection
+- Implement proper error boundaries in React
+
+## Performance Considerations
+- Use TanStack Query for data caching
+- Implement proper loading states
+- Optimize database queries with proper indexing
+- Use lazy loading for heavy components
+
+## Security Best Practices
+- Validate all user inputs with Zod
+- Use environment variables for sensitive data
+- Implement proper CORS configuration
+- Sanitize database queries through ORM
+
+## Testing Approach
+- Focus on integration testing over unit tests
+- Test API endpoints with realistic data
+- Verify database operations through storage interface
+- Test UI components with user interactions
+
+## AI Assistant Guidelines
+When working on TinyAmp:
+- Always check existing patterns before creating new ones
+- Use the storage interface for all database operations
+- Maintain consistency with existing component structure
+- Update documentation when making architectural changes
+- Focus on user experience and performance optimization
