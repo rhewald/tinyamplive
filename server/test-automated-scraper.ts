@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { AutomatedEventScraper } from './automated-scraper';
 
 async function testAutomatedScraper() {
@@ -6,6 +7,9 @@ async function testAutomatedScraper() {
   const scraper = new AutomatedEventScraper();
   
   try {
+    // Initialize the scraper first
+    await scraper.init();
+    
     // Run a single scraping cycle
     await scraper.runScrapingCycle();
     console.log('Scraping cycle completed successfully');

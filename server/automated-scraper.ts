@@ -26,7 +26,7 @@ class AutomatedEventScraper {
   private readonly MAX_EVENTS_PER_RUN = 1000;
 
   constructor() {
-    this.init();
+    // Don't auto-init in constructor
   }
 
   async init() {
@@ -153,9 +153,9 @@ class AutomatedEventScraper {
       await this.page.goto(venueUrl, { waitUntil: 'networkidle', timeout: 30000 });
       await this.page.waitForTimeout(2000);
       
-      const events = await this.page.evaluate(() => {
+      const events = await this.page.evaluate(({ venueName, venueSlug }: { venueName: string; venueSlug: string }) => {
         const events: any[] = [];
-        const allText = document.body.textContent;
+        const allText = document.body.textContent || '';
         
         const datePatterns = [
           /(\w+\s+\d{1,2},?\s+20\d{2})/g,
@@ -164,7 +164,7 @@ class AutomatedEventScraper {
         ];
         
         for (const pattern of datePatterns) {
-          const matches = allText.matchAll(pattern);
+          const matches = Array.from(allText.matchAll(pattern));
           
           for (const match of matches) {
             const dateStr = match[1];
@@ -208,7 +208,7 @@ class AutomatedEventScraper {
         }
         
         return events;
-      });
+      }, { venueName, venueSlug });
       
       console.log(`Found ${events.length} events at ${venueName}`);
       return events;
