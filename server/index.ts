@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { ScrapingScheduler } from "./scheduler";
 
 const app = express();
 app.use(express.json());
@@ -55,6 +56,14 @@ app.use((req, res, next) => {
     await setupVite(app, server);
   } else {
     serveStatic(app);
+  }
+
+  // Start automated scraping scheduler (only in production)
+  if (app.get("env") === "production") {
+    const scheduler = new ScrapingScheduler();
+    scheduler.start().catch(error => {
+      log(`Error starting scraper scheduler: ${error}`);
+    });
   }
 
   // ALWAYS serve the app on port 5000

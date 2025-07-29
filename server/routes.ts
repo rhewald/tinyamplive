@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertUserSchema, insertVenueSchema, insertArtistSchema, insertEventSchema, artists, events } from "@shared/schema";
+import { insertUserSchema, insertVenueSchema, insertArtistSchema, insertEventSchema, artists, events, venues } from "@shared/schema";
 import { venueScraper } from "./scrapers/venue-scraper";
 import { spotifyAPI } from "./spotify";
 import { eventAggregator } from "./event-aggregator";
@@ -16,6 +16,7 @@ import { scrapingMonitor } from "./scraping-monitor";
 // Removed problematic venue scraper imports
 import { spotifyImageEnricher } from "./spotify-image-enricher";
 import { registerGrowthRoutes } from "./routes-growth";
+import { AutomatedEventScraper } from "./automated-scraper";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Event routes
@@ -61,6 +62,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Upcoming events error:', error);
       res.status(500).json({ error: "Failed to fetch upcoming events" });
+    }
+  });
+
+  // Scraping management endpoints
+  app.post("/api/scraping/trigger", async (req, res) => {
+    try {
+      const scraper = new AutomatedEventScraper();
+      await scraper.runScrapingCycle();
+      await scraper.cleanup();
+      res.json({ message: "Scraping cycle completed successfully" });
+    } catch (error) {
+      console.error('Manual scraping error:', error);
+      res.status(500).json({ error: "Failed to run scraping cycle" });
+    }
+  });
+
+  app.get("/api/scraping/status", async (req, res) => {
+    try {
+      // Get database stats
+      const eventCount = await db.select().from(events);
+      const artistCount = await db.select().from(artists);
+      const venueCount = await db.select().from(venues);
+      
+      res.json({
+        status: "active",
+        stats: {
+          events: eventCount.length,
+          artists: artistCount.length,
+          venues: venueCount.length
+        },
+        lastRun: new Date().toISOString(),
+        nextRun: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString() // 6 hours from now
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get scraping status" });
     }
   });
 
